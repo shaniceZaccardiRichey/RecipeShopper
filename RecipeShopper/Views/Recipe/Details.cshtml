@@ -1,0 +1,32 @@
+﻿
+@model Recipe;
+
+@{
+    ViewData["Title"] = "MyRecipes";
+}
+
+<h1>@Model.Name</h1>
+
+<h3>Ingredients</h3>
+@foreach (RecipeIngredient ri in Model.Ingredients)
+{
+<p>
+    - @ri.Quantity @Enum.GetName(typeof(Units), Int32.Parse(ri.MeasurementUnit)) @ri.Ingredient.Name
+</p>
+}
+
+<h3> Directions </h3>
+@foreach (Direction d in Model.Directions)
+{
+    <p>
+        - @d.DirectionContent
+    </p>
+}
+
+<a class="btn btn-primary" asp-controller="Recipe" asp-action="Edit" asp-route-id="@Model.ID">
+    Edit
+</a>
+
+<a class="btn btn-danger" asp-controller="Recipe" asp-action="Delete" asp-route-id="@Model.ID">
+    Delete
+</a>

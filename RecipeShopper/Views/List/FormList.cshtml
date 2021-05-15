@@ -1,0 +1,24 @@
+﻿@model List<Recipe>;
+
+
+<h3>Create Shopping List</h3>
+
+<h6>Select recipes to add to list:</h6>
+
+<form method="post">
+    @foreach (Recipe recipe in Model)
+    {
+
+        <input type="checkbox" name="recipeChecked" value="Bike">
+        <label for="recipeChecked"> @recipe.Name </label>
+        <br>
+
+    }
+
+<a class="btn btn-primary" asp-controller="List" asp-action="Generate">
+    Generate List
+</a>
+
+</form>
+
+

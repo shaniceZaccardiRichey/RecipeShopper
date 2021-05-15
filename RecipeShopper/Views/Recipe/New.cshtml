@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "New";
+}
+
+<h1>New Recipe</h1>
+
+<form asp-action="New" method="post">
+    <label>Name</label>
+    <input type="text" id="Name" name="Name" />
+
+    <input type="submit" value="Create Recipe" />
+    <a href="/Home/Index" class="Button">Cancel</a>
+</form>
+

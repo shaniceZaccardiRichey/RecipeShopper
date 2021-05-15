@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+@using RecipeShopper.ViewModels;
+@using RecipeShopper.Data;
+@model Recipe;
+
+<script type="module">
+    // Add additional ingredient.
+    const addIngredientButton = document.querySelector('#addIngredientFieldset');
+
+    const ingredients = document.querySelector('#ingredients');
+
+    addIngredientButton.addEventListener('click', function () {
+
+        let fieldset = ingredients.querySelector('fieldset:last-child');
+
+        let newFieldset = fieldset.cloneNode([true]);
+
+        newFieldset.querySelector('input[name=ingredientName]').value = '';
+        newFieldset.querySelector('select[name=ingredientQty]').value = '1';
+        newFieldset.querySelector('select[name=ingredientUnit]').value = '1';
+
+        ingredients.append(newFieldset);
+
+    });
+
+    // Add additional direction.
+    const addDirectionButton = document.querySelector('#addDirectionDiv');
+
+    const directions = document.querySelector('#directions');
+
+    addDirectionButton.addEventListener('click', function () {
+        let listItem = directions.querySelector('li:last-child');
+
+        let newListItem = listItem.cloneNode([true]);
+
+        newListItem.querySelector('textarea[name=direction]').value = '';
+
+        directions.append(newListItem);
+    });
+
+</script>
+
+
+
+<h1>Add Recipe</h1>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger">
+
+    </div>
+
+    <div>
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" type="text" />
+    </div>
+
+    <div>
+        <label asp-for="MealCategory">Category</label>
+        <select asp-for="MealCategory" asp-items="Html.GetEnumSelectList<MealCategory>()">
+            <option selected="selected" value="">Select Category...</option>
+        </select>
+    </div>
+
+    <div>
+        <label asp-for="Servings">Servings</label>
+        <select asp-for="Servings">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+            <option value="2">6</option>
+            <option value="2">7</option>
+            <option value="2">8</option>
+            <option value="2">9</option>
+            <option value="2">9</option>
+        </select>
+    </div>
+
+    <h3>Ingredients</h3>
+    <div id="ingredients">
+        @foreach (RecipeIngredient ri in Model.Ingredients)
+        {
+            <fieldset>
+
+                <label>
+                    - Qty
+                    <select name="ingredientQty" value="@ri.Quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="2">4</option>
+                    </select>
+                </label>
+
+                <label>
+                    Unit
+                    <select aname="ingredientUnit" asp-items="Html.GetEnumSelectList<Units>()" value="@ri.MeasurementUnit">
+                        <option selected="selected" value="">Select Unit...</option>
+                    </select>
+                </label>
+
+                <label> Name <input type="text" name="ingredientName" value="@ri.Ingredient.Name"/></label>
+            </fieldset>
+        }
+    </div>
+
+    <input type="button" id="addIngredientFieldset" value="Add Ingredient">
+
+
+    <h3>Directions</h3>
+    <ol id="directions">
+        <li><textarea name="direction"></textarea></li>
+    </ol>
+
+
+    <input type="button" id="addDirectionDiv" value="Add Direction">
+
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>
+
+<a class="btn btn-danger" asp-controller="Recipe" asp-action="Delete" asp-route-id="@Model.ID">
+    Delete
+</a>
+
+<a class="btn btn-primary" asp-controller="Recipe" asp-action="Details" asp-route-id="@Model.ID">
+    Cancel
+</a>

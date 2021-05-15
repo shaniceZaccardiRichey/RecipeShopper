@@ -1,0 +1,48 @@
+﻿
+@model List<Recipe>;
+
+@{
+    ViewData["Title"] = "MyRecipes";
+}
+
+<style>
+
+    .recipe-grid {
+        display: grid;
+        margin-left: auto;
+        margin-right: auto;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-gap: 10px;
+        grid-row-gap: 10px;
+    }
+
+    .recipe-container {
+        width: 100%;
+        border: 1px solid black;
+        padding: 10px;
+        padding-top: 10px;
+    }
+
+
+</style>
+
+<h1>MyRecipes</h1>
+
+<a href="/Recipe/New" class="Button">Add New Recipe</a>
+
+<div class="recipe-grid">
+
+    @foreach (Recipe recipe in Model)
+    {
+        <div class="recipe-container">
+
+            <h3>@recipe.Name</h3>
+
+            <a class="btn btn-primary" asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.ID">
+                Details
+            </a>
+
+        </div>
+    }
+
+</div>
